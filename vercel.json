@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "functions": {
+    "api/upload.js":        { "maxDuration": 15 },
+    "api/upload-bin.js":    { "maxDuration": 15 },
+    "api/photos.js":        { "maxDuration": 10 },
+    "api/latest-escpos.js": { "maxDuration": 15 }
+  },
+  "rewrites": [
+    {
+      "source": "/api/photos/latest/escpos",
+      "destination": "/api/latest-escpos"
+    }
+  ]
+}
