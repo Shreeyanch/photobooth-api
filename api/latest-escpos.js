@@ -2,10 +2,10 @@ const { S3Client, ListObjectsV2Command, GetObjectCommand } = require('@aws-sdk/c
 
 const s3 = new S3Client({
   endpoint: process.env.S3_ENDPOINT,
-  region:   process.env.S3_REGION || 'us-east-1',
+  region:   process.env.AWS_REGION || 'us-east-1',
   credentials: {
-    accessKeyId:     process.env.S3_ACCESS_KEY,
-    secretAccessKey: process.env.S3_SECRET_KEY,
+    accessKeyId:     process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
   forcePathStyle: true,
 });
@@ -33,7 +33,7 @@ module.exports = async function handler(req, res) {
   try {
     // List bins, sorted newest-first
     const list = await s3.send(new ListObjectsV2Command({
-      Bucket: process.env.S3_BUCKET,
+      Bucket: process.env.S3_BUCKET_NAME,
       Prefix: 'photobooth/jobs/',
     }));
 
@@ -58,7 +58,7 @@ module.exports = async function handler(req, res) {
 
     // Download binary from S3
     const obj = await s3.send(new GetObjectCommand({
-      Bucket: process.env.S3_BUCKET,
+      Bucket: process.env.S3_BUCKET_NAME,
       Key:    latest.Key,
     }));
 
